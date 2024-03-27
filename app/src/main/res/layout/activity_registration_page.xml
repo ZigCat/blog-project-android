@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".RegistrationPage">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="580dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/rounded_boxshadow"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/reg_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/istokweb_regular"
+            android:text="@string/registration_title"
+            android:textAlignment="center"
+            android:textSize="40dp" />
+
+        <TextView
+            android:id="@+id/reg_usernameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/istokweb_regular"
+            android:text="@string/username_pole"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/reg_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/input_pole"
+            android:ems="10"
+            android:fontFamily="@font/istokweb_regular"
+            android:hint="@string/username_hint"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColorHint="@color/background" />
+
+        <TextView
+            android:id="@+id/reg_emailLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/istokweb_regular"
+            android:text="@string/email_pole"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/reg_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/input_pole"
+            android:ems="10"
+            android:fontFamily="@font/istokweb_regular"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
+            android:textColorHint="@color/background" />
+
+        <TextView
+            android:id="@+id/reg_passwordLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/istokweb_regular"
+            android:text="@string/password_pole"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/reg_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/input_pole"
+            android:ems="10"
+            android:fontFamily="@font/istokweb_regular"
+            android:hint="@string/password_hint"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColorHint="@color/background" />
+
+        <Button
+            android:id="@+id/registration_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="65dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/registration_title"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="65dp"
+            android:backgroundTint="@color/blue"
+            android:onClick="goToLoginPage"
+            android:text="@string/login_title"
+            android:textSize="25dp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
