@@ -89,7 +89,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="65dp"
             android:backgroundTint="@color/blue"
-            android:onClick="goToMainPage"
+            android:onClick="loginRequest"
             android:text="@string/login_title"
             android:textSize="25dp" />
 
