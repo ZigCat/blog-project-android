@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.zigcat.blogplatform.R;
 import com.github.zigcat.blogplatform.adapters.PostAdapter;
+import com.github.zigcat.blogplatform.api.PostOkHttpHelper;
 import com.github.zigcat.blogplatform.models.Post;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,38 +28,37 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
+    private final PostOkHttpHelper postOkHttpHelper = new PostOkHttpHelper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        new RetrievePostsTask().execute();
-        return rootView;
-    }
-
-    private class RetrievePostsTask extends AsyncTask<Void, Void, List<Post>> {
-        @Override
-        protected List<Post> doInBackground(Void... voids) {
-            try {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("http://10.0.2.2:8080/api/post")
-                        .build();
-                Call call = client.newCall(request);
-                Response response = call.execute();
-                Gson gson = new Gson();
-                Type postListType = new TypeToken<List<Post>>() {}.getType();
-                return gson.fromJson(response.body().string(), postListType);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        postOkHttpHelper.getAllPosts(new PostOkHttpHelper.CallbackGetPostsListener() {
+            @Override
+            public void onSuccess(List<Post> response) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ListView listView = getView().findViewById(R.id.post_listview);
+                        PostAdapter postAdapter = new PostAdapter(response);
+                        listView.setAdapter(postAdapter);
+                    }
+                });
             }
-        }
 
-        @Override
-        protected void onPostExecute(List<Post> posts) {
-            ListView listView = getView().findViewById(R.id.post_listview);
-            PostAdapter postAdapter = new PostAdapter(posts);
-            listView.setAdapter(postAdapter);
-        }
+            @Override
+            public void onFailure(Exception e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView error = rootView.findViewById(R.id.home_post_error);
+                        error.setVisibility(View.VISIBLE);
+                        error.setText("Error: "+e.getMessage());
+                    }
+                });
+            }
+        });
+        return rootView;
     }
 }
