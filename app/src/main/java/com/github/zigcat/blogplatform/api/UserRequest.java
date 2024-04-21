@@ -2,6 +2,7 @@ package com.github.zigcat.blogplatform.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor

@@ -25,6 +25,14 @@
 
     <string name="user_posts_title">User posts</string>
     <string name="delete_account">Delete account</string>
+    <string name="user_editinfo_title">Edit info</string>
+    <string name="user_editpwd_title">Edit Password</string>
+    <string name="user_editpwd_hint">New Password</string>
+    <string name="user_editpwd_confirm_hint">Confirm Password</string>
+    <string name="editpwd_nomatch">Fields do not match</string>
+    <string name="editinfo_apply">Apply</string>
+    <string name="editinfo_cancel">Cancel</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

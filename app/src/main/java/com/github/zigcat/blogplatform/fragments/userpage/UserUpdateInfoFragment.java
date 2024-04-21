@@ -1,5 +1,7 @@
 package com.github.zigcat.blogplatform.fragments.userpage;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +9,92 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.zigcat.blogplatform.R;
+import com.github.zigcat.blogplatform.api.UserOkHttpHelper;
+import com.github.zigcat.blogplatform.api.UserRequest;
+import com.github.zigcat.blogplatform.models.User;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserUpdateInfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UserUpdateInfoFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public UserUpdateInfoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UserUpdateInfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UserUpdateInfoFragment newInstance(String param1, String param2) {
-        UserUpdateInfoFragment fragment = new UserUpdateInfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_update_info, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_user_update_info, container, false);
+        UserOkHttpHelper userOkHttpHelper = new UserOkHttpHelper();
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("blogplatform", Context.MODE_PRIVATE);
+
+        EditText username = rootView.findViewById(R.id.user_editinfo_username);
+        username.setText(sharedPref.getString("username", ""));
+        EditText nickname = rootView.findViewById(R.id.user_editinfo_nickname);
+        nickname.setText(sharedPref.getString("nickname", ""));
+        EditText email = rootView.findViewById(R.id.user_editinfo_email);
+        email.setText(sharedPref.getString("email", ""));
+
+        Button editPwdButton = rootView.findViewById(R.id.editpwd_button);
+        Button apply = rootView.findViewById(R.id.editinfo_apply);
+        Button cancel = rootView.findViewById(R.id.editinfo_cancel);
+
+        editPwdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserUpdatePwdFragment()).commit();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserInfoFragment()).commit();
+            }
+        });
+
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int userId = sharedPref.getInt("id", -1);
+                String credentials = sharedPref.getString("auth", null);
+                if(userId != -1 && credentials != null){
+                    UserRequest request = new UserRequest(
+                            username.getText().toString(),
+                            nickname.getText().toString(),
+                            email.getText().toString(),
+                            "password",
+                            "USER");
+                    userOkHttpHelper.updateUserInfo(credentials, userId, request, new UserOkHttpHelper.CallbackUser() {
+                        @Override
+                        public void onSuccess(User response) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.success, Toast.LENGTH_LONG);
+                                    toast.show();
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserInfoFragment()).commit();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.error_message, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+        return rootView;
     }
 }

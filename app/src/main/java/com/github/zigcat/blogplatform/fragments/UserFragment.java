@@ -17,7 +17,6 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_user, container, false);
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.user_fragment_container, new UserInfoFragment()).commit();
-
         return rootView;
     }
 }

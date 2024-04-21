@@ -42,6 +42,11 @@ public class UserInfoFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("username", response.getUsername());
+                            editor.putString("nickname", response.getNickname());
+                            editor.putString("email", response.getEmail());
+                            editor.apply();
                             username.setText(response.getUsername());
                             nickname.setText(response.getNickname());
                             String regdateText = "Signed up "+response.getCreationDate();
@@ -66,6 +71,13 @@ public class UserInfoFragment extends Fragment {
         if(loggedUserId == pageUserId){
             deleteButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserUpdateInfoFragment()).commit();
+                }
+            });
         }
 
         return rootView;
