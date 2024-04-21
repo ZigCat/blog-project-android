@@ -20,11 +20,11 @@ import okhttp3.Response;
 public class UserOkHttpHelper {
     private static final String BASE_URL = "http://10.0.2.2:8080/api/user";
 
-    public interface CallbackLogin{
+    public interface CallbackUser{
         void onSuccess(User response);
         void onFailure(Exception e);
     }
-    public void register(UserRequest user, CallbackLogin callback){
+    public void register(UserRequest user, CallbackUser callback){
         Gson gson = new Gson();
         String requestBody = gson.toJson(user);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), requestBody);
@@ -51,11 +51,36 @@ public class UserOkHttpHelper {
             }
         });
     }
-    public void login(String credentials, CallbackLogin callback){
+    public void login(String credentials, CallbackUser callback){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(BASE_URL+"/login")
                 .header("Authorization", credentials)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.code() == 200) {
+                    Gson gson = new Gson();
+                    Type postListType = new TypeToken<User>() {}.getType();
+                    callback.onSuccess(gson.fromJson(response.body().string(), postListType));
+                } else {
+                    callback.onFailure(new Exception("500"));
+                }
+            }
+        });
+    }
+
+    public void getUserById(int id, CallbackUser callback){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/id/"+id)
+                .get()
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override

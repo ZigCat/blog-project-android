@@ -9,10 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.github.zigcat.blogplatform.fragments.HomeFragment;
 import com.github.zigcat.blogplatform.fragments.SearchFragment;
@@ -35,6 +37,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         ImageView menuButton = findViewById(R.id.menu_button);
+        ImageView userButton = findViewById(R.id.user_button);
+        userButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
+                int loggerUserId = sharedPref.getInt("id", -1);
+                if(loggerUserId != -1){
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("page_user_id", loggerUserId);
+                    editor.apply();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment()).commit();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open_nav, R.string.close_nav) {
@@ -77,7 +96,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                 break;
             case R.id.nav_user:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment()).commit();
+                SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
+                int loggedUserId = sharedPref.getInt("id", -1);
+                if(loggedUserId != -1){
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("page_user_id", loggedUserId);
+                    editor.apply();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment()).commit();
+                }
                 break;
             case R.id.nav_search:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();

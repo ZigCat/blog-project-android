@@ -40,7 +40,7 @@ public class RegistrationPage extends AppCompatActivity {
                         password.getText().toString(),
                         "USER");
                 String credentials = Credentials.basic(username.getText().toString(), password.getText().toString());
-                userOkHttpHelper.register(user, new UserOkHttpHelper.CallbackLogin() {
+                userOkHttpHelper.register(user, new UserOkHttpHelper.CallbackUser() {
                     @Override
                     public void onSuccess(User response) {
                         SharedPreferences sharedPreferences = getSharedPreferences("blogplatform", MODE_PRIVATE);
@@ -61,7 +61,7 @@ public class RegistrationPage extends AppCompatActivity {
                                     TextView pagetitle = findViewById(R.id.reg_title);
                                     pagetitle.setText(R.string.error_message);
                                 } else {
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             }

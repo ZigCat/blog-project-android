@@ -38,7 +38,7 @@ public class LoginPage extends AppCompatActivity {
                 EditText login = findViewById(R.id.login_username);
                 EditText password = findViewById(R.id.login_password);
                 String credentials = Credentials.basic(login.getText().toString(), password.getText().toString());
-                userOkHttpHelper.login(credentials, new UserOkHttpHelper.CallbackLogin() {
+                userOkHttpHelper.login(credentials, new UserOkHttpHelper.CallbackUser() {
                     @Override
                     public void onSuccess(User response) {
                         SharedPreferences sharedPreferences = getSharedPreferences("blogplatform", MODE_PRIVATE);
@@ -59,7 +59,7 @@ public class LoginPage extends AppCompatActivity {
                                     TextView pagetitle = findViewById(R.id.login_pagetitle);
                                     pagetitle.setText(R.string.error_message);
                                 } else {
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Internal Server Error", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             }

@@ -69,7 +69,8 @@ public class HomeFragment extends Fragment {
                     public void run() {
                         TextView error = rootView.findViewById(R.id.home_post_error);
                         error.setVisibility(View.VISIBLE);
-                        error.setText("Error: "+e.getMessage());
+                        String errorMessage = "Error: "+e.getMessage();
+                        error.setText(errorMessage);
                     }
                 });
             }
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.success, Toast.LENGTH_LONG);
                                     toast.show();
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                                 }
@@ -102,7 +103,7 @@ public class HomeFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Internal Server Error", Toast.LENGTH_LONG);
+                                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
                                     toast.show();
                                 }
                             });
