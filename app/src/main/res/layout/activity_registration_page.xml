@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".RegistrationPage">
+    tools:context=".RegistrationPage"
+    tools:ignore="MissingDefaultResource">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -102,7 +103,7 @@
             android:ems="10"
             android:fontFamily="@font/istokweb_regular"
             android:hint="@string/password_hint"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:padding="15dp"
             android:textColorHint="@color/background" />
 
