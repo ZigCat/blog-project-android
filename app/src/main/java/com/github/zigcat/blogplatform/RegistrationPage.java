@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.github.zigcat.blogplatform.api.UserOkHttpHelper;
 import com.github.zigcat.blogplatform.models.User;
-import com.github.zigcat.blogplatform.models.UserRequest;
+import com.github.zigcat.blogplatform.api.UserRequest;
 
 import okhttp3.Credentials;
 
@@ -31,10 +31,11 @@ public class RegistrationPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText username = findViewById(R.id.reg_username);
+                EditText nickname = findViewById(R.id.reg_nickname);
                 EditText email = findViewById(R.id.reg_email);
                 EditText password = findViewById(R.id.reg_password);
                 UserRequest user = new UserRequest(username.getText().toString(),
-                        username.getText().toString(),
+                        nickname.getText().toString(),
                         email.getText().toString(),
                         password.getText().toString(),
                         "USER");

@@ -1,23 +1,13 @@
 package com.github.zigcat.blogplatform.api;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 
-import com.github.zigcat.blogplatform.LoginPage;
-import com.github.zigcat.blogplatform.MainActivity;
-import com.github.zigcat.blogplatform.R;
-import com.github.zigcat.blogplatform.models.Post;
 import com.github.zigcat.blogplatform.models.User;
-import com.github.zigcat.blogplatform.models.UserRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;

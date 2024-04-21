@@ -3,9 +3,11 @@
     <string name="login_title">Login</string>
     <string name="registration_title">Registration</string>
     <string name="username_pole">Username</string>
+    <string name="nickname_pole">Nickname</string>
     <string name="email_pole">Email</string>
     <string name="password_pole">Password</string>
     <string name="username_hint">johndoe</string>
+    <string name="nickname_hint">johny</string>
     <string name="email_hint">johndoe@gmail.com</string>
     <string name="password_hint">********</string>
     <string name="open_nav">Open Navigation Menu</string>
