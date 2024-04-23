@@ -9,8 +9,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +57,13 @@ public class HomeFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ListView listView = getView().findViewById(R.id.post_listview);
+                        RecyclerView recyclerView = getActivity().findViewById(R.id.post_recyclerview);
                         Collections.reverse(response);
                         PostAdapter postAdapter = new PostAdapter(response);
-                        listView.setAdapter(postAdapter);
+                        Log.i("HOMEFRAGMET", "HERE");
+                        recyclerView.setAdapter(postAdapter);
+                        postAdapter.notifyDataSetChanged();
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
                     }
                 });
             }

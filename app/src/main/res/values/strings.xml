@@ -24,7 +24,7 @@
     <string name="new_content_button">Publish</string>
 
     <string name="user_posts_title">User posts</string>
-    <string name="delete_account">Delete account</string>
+    <string name="delete_account">Delete</string>
     <string name="user_editinfo_title">Edit info</string>
     <string name="user_editpwd_title">Edit Password</string>
     <string name="user_editpwd_hint">New Password</string>

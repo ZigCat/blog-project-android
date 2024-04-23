@@ -59,6 +59,7 @@ public class LoginPage extends AppCompatActivity {
                                     TextView pagetitle = findViewById(R.id.login_pagetitle);
                                     pagetitle.setText(R.string.error_message);
                                 } else {
+                                    Log.e("LOGIN CONNECTION SERVER", e.getMessage());
                                     Toast toast = Toast.makeText(getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
                                     toast.show();
                                 }

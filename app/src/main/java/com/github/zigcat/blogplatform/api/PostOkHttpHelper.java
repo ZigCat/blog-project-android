@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
+import com.github.zigcat.blogplatform.R;
 import com.github.zigcat.blogplatform.models.Post;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +22,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class PostOkHttpHelper {
-    private static final String BASE_URL = "http://10.0.2.2:8080/api/post";
+    private static final String BASE_URL = "http://"+ServerIP.getCurrentIP()+":8080/api/post";
 
     public interface CallbackGetPostsListener{
         void onSuccess(List<Post> response);
