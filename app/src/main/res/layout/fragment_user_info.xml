@@ -6,6 +6,7 @@
     android:layout_height="300dp"
     android:orientation="vertical"
     android:padding="15dp"
+    android:background="@color/white"
     tools:context=".fragments.userpage.UserInfoFragment">
 
     <LinearLayout

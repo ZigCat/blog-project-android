@@ -34,6 +34,31 @@ public class PostOkHttpHelper {
         void onFailure(Exception e);
     }
 
+    public void getPostsByUserId(int userId, CallbackGetPostsListener callback){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/user/"+userId)
+                .get()
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Gson gson = new Gson();
+                    Type postListType = new TypeToken<List<Post>>() {}.getType();
+                    callback.onSuccess(gson.fromJson(response.body().string(), postListType));
+                } else {
+                    callback.onFailure(new Exception(String.valueOf(response.code())));
+                }
+            }
+        });
+    }
+
     public void getAllPosts(CallbackGetPostsListener callback) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(BASE_URL).get().build();

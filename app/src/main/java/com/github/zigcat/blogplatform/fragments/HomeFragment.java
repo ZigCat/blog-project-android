@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment {
                         RecyclerView recyclerView = getActivity().findViewById(R.id.post_recyclerview);
                         Collections.reverse(response);
                         PostAdapter postAdapter = new PostAdapter(response);
-                        Log.i("HOMEFRAGMET", "HERE");
                         recyclerView.setAdapter(postAdapter);
                         postAdapter.notifyDataSetChanged();
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -89,7 +88,6 @@ public class HomeFragment extends Fragment {
                 TextView content = rootView.findViewById(R.id.new_content);
                 if(content.getText().toString().isEmpty()){
                     content.setHint(R.string.missing_content);
-                    content.setHintTextColor(R.color.red);
                 } else {
                     postOkHttpHelper.createPost(credentials, content.getText().toString(), new PostOkHttpHelper.CallbackCreateListener() {
                         @Override

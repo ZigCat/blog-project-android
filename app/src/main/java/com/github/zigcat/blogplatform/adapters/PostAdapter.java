@@ -53,7 +53,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.getUsername().setText(post.getUser().getUsername());
         holder.getRegdate().setText(post.getCreationDate());
         holder.getContent().setText(post.getContent());
-        Log.i("POSTADAPTER", "ELEMENT CREATED");
     }
 
     @Override
