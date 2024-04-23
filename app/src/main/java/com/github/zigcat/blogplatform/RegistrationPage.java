@@ -72,6 +72,12 @@ public class RegistrationPage extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        super.onBackPressed();
+    }
+
     public void goToLoginPage(View v){
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);

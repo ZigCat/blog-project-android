@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
+        int userId = sharedPref.getInt("id", -1);
+        if(userId == -1){
+            Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+            startActivity(intent);
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
                 int loggerUserId = sharedPref.getInt("id", -1);
                 if(loggerUserId != -1){
                     SharedPreferences.Editor editor = sharedPref.edit();
@@ -91,12 +96,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
         switch(item.getItemId()){
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                 break;
             case R.id.nav_user:
-                SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
                 int loggedUserId = sharedPref.getInt("id", -1);
                 if(loggedUserId != -1){
                     SharedPreferences.Editor editor = sharedPref.edit();
@@ -109,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
                 break;
             case R.id.nav_logout:
+                sharedPref.edit().clear().apply();
                 Intent intent = new Intent(this, LoginPage.class);
                 startActivity(intent);
                 break;
@@ -122,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
+            finishAffinity();
             super.onBackPressed();
         }
     }
