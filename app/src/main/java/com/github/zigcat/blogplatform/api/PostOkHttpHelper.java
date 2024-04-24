@@ -39,6 +39,30 @@ public class PostOkHttpHelper {
         void onFailure(Exception e);
     }
 
+    public void deletePost(int id, String credentials, CallbackCreateListener callback){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/delete/"+id)
+                .header("Authorization", credentials)
+                .delete()
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    callback.onSuccess("200");
+                } else {
+                    callback.onFailure(new Exception(String.valueOf(response.code())));
+                }
+            }
+        });
+    }
+
     public void updatePost(int id, String credentials, String newContent, CallbackGetPostListener callback){
         OkHttpClient client = new OkHttpClient();
         String requestBody = "{\"content\":\""+newContent+"\"}";

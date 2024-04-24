@@ -1,5 +1,6 @@
 package com.github.zigcat.blogplatform.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.Image;
@@ -11,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.zigcat.blogplatform.R;
 import com.github.zigcat.blogplatform.api.PostOkHttpHelper;
@@ -28,13 +31,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class PostFragment extends Fragment {
     private int postId;
-    private int userId = -1;
-
-    public PostFragment(int postId){
-        this.postId = postId;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +72,64 @@ public class PostFragment extends Fragment {
                 error.setText(errorMessage);
             }
         });
+
+        Dialog deleteDialog = new Dialog(requireContext());
+        deleteDialog.setContentView(R.layout.dialog_post_delete);
+        deleteDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        deleteDialog.getWindow().setBackgroundDrawable(getActivity().getDrawable(R.drawable.rounded_border));
+        deleteDialog.setCancelable(false);
+
+        Button dialogConfirm = deleteDialog.findViewById(R.id.post_delete_dialog_confirm);
+        Button dialogCancel = deleteDialog.findViewById(R.id.post_delete_dialog_cancel);
+
+        dialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postOkHttpHelper.deletePost(postId, sharedPref.getString("auth", ""), new PostOkHttpHelper.CallbackCreateListener() {
+                    @Override
+                    public void onSuccess(String response) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.success, Toast.LENGTH_LONG);
+                                toast.show();
+                                getActivity().getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, new HomeFragment())
+                                        .commit();
+                                deleteDialog.dismiss();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
+                                toast.show();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.show();
+            }
+        });
+
         return rootView;
     }
 }
