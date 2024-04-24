@@ -12,7 +12,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/user_button"
+            android:id="@+id/post_user_button"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@drawable/avatar_border"

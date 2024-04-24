@@ -34,6 +34,64 @@ public class PostOkHttpHelper {
         void onFailure(Exception e);
     }
 
+    public interface CallbackGetPostListener{
+        void onSuccess(Post post);
+        void onFailure(Exception e);
+    }
+
+    public void updatePost(int id, String credentials, String newContent, CallbackGetPostListener callback){
+        OkHttpClient client = new OkHttpClient();
+        String requestBody = "{\"content\":\""+newContent+"\"}";
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), requestBody);
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/update/"+id)
+                .header("Authorization", credentials)
+                .patch(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Gson gson = new Gson();
+                    Type postListType = new TypeToken<Post>() {}.getType();
+                    callback.onSuccess(gson.fromJson(response.body().string(), postListType));
+                } else {
+                    callback.onFailure(new Exception(String.valueOf(response.code())));
+                }
+            }
+        });
+    }
+
+    public void getPostById(int id, CallbackGetPostListener callback){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/id/"+id)
+                .get()
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Gson gson = new Gson();
+                    Type postListType = new TypeToken<Post>() {}.getType();
+                    callback.onSuccess(gson.fromJson(response.body().string(), postListType));
+                } else {
+                    callback.onFailure(new Exception(String.valueOf(response.code())));
+                }
+            }
+        });
+    }
+
     public void getPostsByUserId(int userId, CallbackGetPostsListener callback){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

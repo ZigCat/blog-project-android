@@ -17,8 +17,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="@drawable/border_bottom">
+            android:layout_height="90dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,7 +36,7 @@
                     android:src="@drawable/menu" />
 
                 <ImageView
-                    android:id="@+id/user_button"
+                    android:id="@+id/post_user_button"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_alignParentEnd="true"

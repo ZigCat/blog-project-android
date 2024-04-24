@@ -37,7 +37,7 @@
             android:id="@+id/user_posts_title"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/postform_border"
+            android:background="@drawable/border_all"
             android:fontFamily="@font/istokweb_bold"
             android:gravity="center"
             android:text="@string/user_posts_title"

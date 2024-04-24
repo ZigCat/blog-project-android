@@ -1,5 +1,7 @@
 package com.github.zigcat.blogplatform.adapters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.zigcat.blogplatform.R;
+import com.github.zigcat.blogplatform.fragments.PostFragment;
+import com.github.zigcat.blogplatform.fragments.UserFragment;
 import com.github.zigcat.blogplatform.models.Post;
 
 import java.util.List;
@@ -43,7 +48,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
-        return new ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPref = parent.getContext().getSharedPreferences("blogplatform", Context.MODE_PRIVATE);
+                int position = viewHolder.getAdapterPosition();
+                int postId = posts.get(position).getId();
+                ((AppCompatActivity) parent.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostFragment(postId)).commit();
+            }
+        });
+        return viewHolder;
     }
 
     @Override

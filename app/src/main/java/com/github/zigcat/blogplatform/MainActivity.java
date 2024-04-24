@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         ImageView menuButton = findViewById(R.id.menu_button);
-        ImageView userButton = findViewById(R.id.user_button);
+        ImageView userButton = findViewById(R.id.post_user_button);
         userButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

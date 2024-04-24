@@ -33,6 +33,10 @@
     <string name="editinfo_apply">Apply</string>
     <string name="editinfo_cancel">Cancel</string>
 
+    <string name="post_title">Post</string>
+    <string name="post_comments_title">Comments</string>
+    <string name="post_comment_hint">Your opinion...</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
