@@ -98,14 +98,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences sharedPref = getSharedPreferences("blogplatform", MODE_PRIVATE);
         switch(item.getItemId()){
             case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new HomeFragment())
+                        .addToBackStack("home")
+                        .commit();
                 break;
             case R.id.nav_user:
                 int loggedUserId = sharedPref.getInt("id", -1);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment(loggedUserId)).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new UserFragment(loggedUserId))
+                        .addToBackStack("user")
+                        .commit();
                 break;
             case R.id.nav_search:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new SearchFragment())
+                        .addToBackStack("search")
+                        .commit();
                 break;
             case R.id.nav_logout:
                 sharedPref.edit().clear().apply();
@@ -122,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            finishAffinity();
             super.onBackPressed();
         }
     }

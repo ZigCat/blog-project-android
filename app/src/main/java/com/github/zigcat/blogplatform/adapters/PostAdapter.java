@@ -55,7 +55,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 SharedPreferences sharedPref = parent.getContext().getSharedPreferences("blogplatform", Context.MODE_PRIVATE);
                 int position = viewHolder.getAdapterPosition();
                 int postId = posts.get(position).getId();
-                ((AppCompatActivity) parent.getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostFragment(postId)).commit();
+                ((AppCompatActivity) parent.getContext()).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new PostFragment(postId))
+                        .addToBackStack("post")
+                        .commit();
             }
         });
         return viewHolder;

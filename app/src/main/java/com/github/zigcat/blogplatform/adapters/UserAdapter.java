@@ -49,6 +49,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 ((AppCompatActivity) parent.getContext()).getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, new UserFragment(userId))
+                        .addToBackStack("user")
                         .commit();
             }
         });

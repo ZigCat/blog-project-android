@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +76,7 @@ public class PostFragment extends Fragment {
                                 getActivity().getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.fragment_container, new UserFragment(post.getUser().getId()))
+                                        .addToBackStack("user")
                                         .commit();
                             }
                         });
@@ -221,6 +223,15 @@ public class PostFragment extends Fragment {
                 deleteDialog.show();
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getParentFragmentManager().popBackStackImmediate();
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         return rootView;
     }
