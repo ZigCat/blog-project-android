@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putInt("page_user_id", loggerUserId);
                     editor.apply();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment(loggerUserId)).commit();
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), R.string.server_error, Toast.LENGTH_LONG);
                     toast.show();
@@ -102,12 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_user:
                 int loggedUserId = sharedPref.getInt("id", -1);
-                if(loggedUserId != -1){
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putInt("page_user_id", loggedUserId);
-                    editor.apply();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment()).commit();
-                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserFragment(loggedUserId)).commit();
                 break;
             case R.id.nav_search:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();

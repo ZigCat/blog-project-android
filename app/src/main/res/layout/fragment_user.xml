@@ -33,7 +33,18 @@
             android:id="@+id/user_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="@color/bg_color"/>
+            android:background="@color/bg_color">
+
+            <TextView
+                android:id="@+id/user_fragment_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/server_error"
+                android:gravity="center_horizontal"
+                android:textSize="30sp"
+                android:textColor="@color/main_color"
+                android:visibility="gone"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/user_posts_title"

@@ -18,7 +18,16 @@ import com.github.zigcat.blogplatform.api.UserOkHttpHelper;
 import com.github.zigcat.blogplatform.api.UserRequest;
 import com.github.zigcat.blogplatform.models.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class UserUpdateInfoFragment extends Fragment {
+    private int userId;
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,11 +38,11 @@ public class UserUpdateInfoFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences("blogplatform", Context.MODE_PRIVATE);
 
         EditText username = rootView.findViewById(R.id.user_editinfo_username);
-        username.setText(sharedPref.getString("username", ""));
+        username.setText(getUser().getUsername());
         EditText nickname = rootView.findViewById(R.id.user_editinfo_nickname);
-        nickname.setText(sharedPref.getString("nickname", ""));
+        nickname.setText(getUser().getNickname());
         EditText email = rootView.findViewById(R.id.user_editinfo_email);
-        email.setText(sharedPref.getString("email", ""));
+        email.setText(getUser().getEmail());
 
         Button editPwdButton = rootView.findViewById(R.id.editpwd_button);
         Button apply = rootView.findViewById(R.id.editinfo_apply);
@@ -42,14 +51,20 @@ public class UserUpdateInfoFragment extends Fragment {
         editPwdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserUpdatePwdFragment()).commit();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.user_fragment_container, new UserUpdatePwdFragment(getUserId(), getUser()))
+                        .commit();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserInfoFragment()).commit();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.user_fragment_container, new UserInfoFragment(getUserId(), getUser()))
+                        .commit();
             }
         });
 
@@ -73,7 +88,10 @@ public class UserUpdateInfoFragment extends Fragment {
                                 public void run() {
                                     Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.success, Toast.LENGTH_LONG);
                                     toast.show();
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserInfoFragment()).commit();
+                                    getActivity().getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .replace(R.id.user_fragment_container, new UserInfoFragment(getUserId()))
+                                            .commit();
                                 }
                             });
                         }

@@ -11,16 +11,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.zigcat.blogplatform.R;
 import com.github.zigcat.blogplatform.api.UserOkHttpHelper;
 import com.github.zigcat.blogplatform.models.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class UserInfoFragment extends Fragment {
+    private int userId;
+    private User user;
+
+    public UserInfoFragment(int userId) {
+        this.userId = userId;
+        this.user = null;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,26 +45,20 @@ public class UserInfoFragment extends Fragment {
         ImageView editButton = rootView.findViewById(R.id.user_editbutton);
         Button deleteButton = rootView.findViewById(R.id.user_deletebutton);
 
-        UserOkHttpHelper userOkHttpHelper = new UserOkHttpHelper();
         SharedPreferences sharedPref = getActivity().getSharedPreferences("blogplatform", Context.MODE_PRIVATE);
         int loggedUserId = sharedPref.getInt("id", -1);
-        int pageUserId = sharedPref.getInt("page_user_id", -1);
-        if(pageUserId != -1){
-            userOkHttpHelper.getUserById(pageUserId, new UserOkHttpHelper.CallbackUser() {
+        UserOkHttpHelper userOkHttpHelper = new UserOkHttpHelper();
+        if(getUser() == null){
+            userOkHttpHelper.getUserById(userId, new UserOkHttpHelper.CallbackUser() {
                 @Override
                 public void onSuccess(User response) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putString("username", response.getUsername());
-                            editor.putString("nickname", response.getNickname());
-                            editor.putString("email", response.getEmail());
-                            editor.apply();
+                            setUser(response);
                             username.setText(response.getUsername());
                             nickname.setText(response.getNickname());
-                            String regdateText = "Signed up "+response.getCreationDate();
-                            regdate.setText(regdateText);
+                            regdate.setText(response.getCreationDate());
                         }
                     });
                 }
@@ -60,22 +68,31 @@ public class UserInfoFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            nickname.setText(R.string.server_error);
+                            LinearLayout userInfo = rootView.findViewById(R.id.user_info_fragment);
+                            userInfo.setVisibility(View.GONE);
+                            TextView error = getParentFragment().getActivity().findViewById(R.id.user_fragment_error);
+                            error.setVisibility(View.VISIBLE);
                         }
                     });
                 }
             });
         } else {
-            nickname.setText(R.string.server_error);
+            username.setText(getUser().getUsername());
+            nickname.setText(getUser().getNickname());
+            regdate.setText(getUser().getCreationDate());
         }
-        if(loggedUserId == pageUserId){
+
+        if(loggedUserId == userId){
             deleteButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
 
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserUpdateInfoFragment()).commit();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.user_fragment_container, new UserUpdateInfoFragment(getUserId(), getUser()))
+                            .commit();
                 }
             });
         }

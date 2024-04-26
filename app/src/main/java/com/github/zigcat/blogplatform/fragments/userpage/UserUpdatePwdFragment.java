@@ -17,9 +17,17 @@ import com.github.zigcat.blogplatform.R;
 import com.github.zigcat.blogplatform.api.UserOkHttpHelper;
 import com.github.zigcat.blogplatform.models.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import okhttp3.Credentials;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class UserUpdatePwdFragment extends Fragment {
+    private int userId;
+    private User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,14 +43,20 @@ public class UserUpdatePwdFragment extends Fragment {
         editInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserUpdateInfoFragment()).commit();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.user_fragment_container, new UserUpdateInfoFragment(getUserId(), getUser()))
+                        .commit();
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserInfoFragment()).commit();
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.user_fragment_container, new UserInfoFragment(getUserId(), getUser()))
+                        .commit();
             }
         });
 
@@ -65,7 +79,10 @@ public class UserUpdatePwdFragment extends Fragment {
                                         toast.show();
                                         String newCredentials = Credentials.basic(username, password1.getText().toString());
                                         sharedPref.edit().putString("auth", newCredentials).apply();
-                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.user_fragment_container, new UserInfoFragment()).commit();
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.user_fragment_container, new UserInfoFragment(getUserId(), getUser()))
+                                                .commit();
                                     }
                                 });
                             }
