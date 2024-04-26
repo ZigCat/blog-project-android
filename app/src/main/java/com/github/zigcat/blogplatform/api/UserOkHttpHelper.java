@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -23,6 +24,11 @@ public class UserOkHttpHelper {
 
     public interface CallbackUser{
         void onSuccess(User response);
+        void onFailure(Exception e);
+    }
+
+    public interface CallbackUsers{
+        void onSuccess(List<User> response);
         void onFailure(Exception e);
     }
 
@@ -182,6 +188,31 @@ public class UserOkHttpHelper {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.code() == 200){
                     callback.onSuccess("200");
+                } else {
+                    callback.onFailure(new Exception("500"));
+                }
+            }
+        });
+    }
+
+    public void search(String key, CallbackUsers callback){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/search?search="+key)
+                .get()
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.code() == 200) {
+                    Gson gson = new Gson();
+                    Type postListType = new TypeToken<List<User>>() {}.getType();
+                    callback.onSuccess(gson.fromJson(response.body().string(), postListType));
                 } else {
                     callback.onFailure(new Exception("500"));
                 }
