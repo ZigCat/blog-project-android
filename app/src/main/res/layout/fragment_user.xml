@@ -32,19 +32,20 @@
         <FrameLayout
             android:id="@+id/user_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@color/bg_color">
+            android:layout_height="wrap_content"
+            android:background="@color/bg_color"
+            android:minHeight="180dp">
 
             <TextView
                 android:id="@+id/user_fragment_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/server_error"
-                android:gravity="center_horizontal"
-                android:textSize="30sp"
-                android:textColor="@color/main_color"
                 android:layout_marginTop="20dp"
-                android:visibility="gone"/>
+                android:gravity="center_horizontal"
+                android:text="@string/server_error"
+                android:textColor="@color/main_color"
+                android:textSize="30sp"
+                android:visibility="gone" />
         </FrameLayout>
 
         <TextView

@@ -125,6 +125,7 @@ public class UserInfoFragment extends Fragment {
                                 public void run() {
                                     Toast toast = Toast.makeText(getContext(), R.string.success, Toast.LENGTH_LONG);
                                     toast.show();
+                                    sharedPref.edit().clear().apply();
                                     Intent intent = new Intent(getContext(), RegistrationPage.class);
                                     startActivity(intent);
                                 }

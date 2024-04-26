@@ -84,7 +84,7 @@
             android:id="@+id/post_page_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
+            android:minHeight="50dp"
             android:orientation="horizontal"
             android:paddingStart="50dp"
             android:paddingEnd="15dp"
@@ -131,7 +131,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/editTextText"
+                    android:id="@+id/new_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
