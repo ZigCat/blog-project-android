@@ -26,6 +26,11 @@ public class UserOkHttpHelper {
         void onFailure(Exception e);
     }
 
+    public interface CallbackResponseString{
+        void onSuccess(String response);
+        void onFailure(Exception e);
+    }
+
     public void register(UserRequest user, CallbackUser callback){
         Gson gson = new Gson();
         String requestBody = gson.toJson(user);
@@ -153,6 +158,30 @@ public class UserOkHttpHelper {
                     Gson gson = new Gson();
                     Type postListType = new TypeToken<User>() {}.getType();
                     callback.onSuccess(gson.fromJson(response.body().string(), postListType));
+                } else {
+                    callback.onFailure(new Exception("500"));
+                }
+            }
+        });
+    }
+
+    public void deleteUser(int id, String credentials, CallbackResponseString callback){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"/delete/"+id)
+                .header("Authorization", credentials)
+                .delete()
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.code() == 200){
+                    callback.onSuccess("200");
                 } else {
                     callback.onFailure(new Exception("500"));
                 }

@@ -37,7 +37,7 @@ public class LoginPage extends AppCompatActivity {
             public void onClick(View v) {
                 EditText login = findViewById(R.id.login_username);
                 EditText password = findViewById(R.id.login_password);
-                String credentials = Credentials.basic(login.getText().toString(), password.getText().toString());
+                String credentials = Credentials.basic(login.getText().toString().trim(), password.getText().toString().trim());
                 userOkHttpHelper.login(credentials, new UserOkHttpHelper.CallbackUser() {
                     @Override
                     public void onSuccess(User response) {

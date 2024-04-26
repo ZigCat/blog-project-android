@@ -75,9 +75,9 @@ public class UserUpdateInfoFragment extends Fragment {
                 String credentials = sharedPref.getString("auth", null);
                 if(userId != -1 && credentials != null){
                     UserRequest request = new UserRequest(
-                            username.getText().toString(),
-                            nickname.getText().toString(),
-                            email.getText().toString(),
+                            username.getText().toString().trim(),
+                            nickname.getText().toString().trim(),
+                            email.getText().toString().trim(),
                             "password",
                             "USER");
                     userOkHttpHelper.updateUserInfo(credentials, userId, request, new UserOkHttpHelper.CallbackUser() {

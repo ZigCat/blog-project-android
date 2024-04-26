@@ -1,6 +1,8 @@
 package com.github.zigcat.blogplatform.fragments.userpage;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,8 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.zigcat.blogplatform.R;
+import com.github.zigcat.blogplatform.RegistrationPage;
 import com.github.zigcat.blogplatform.api.UserOkHttpHelper;
 import com.github.zigcat.blogplatform.models.User;
 
@@ -70,7 +74,7 @@ public class UserInfoFragment extends Fragment {
                         public void run() {
                             LinearLayout userInfo = rootView.findViewById(R.id.user_info_fragment);
                             userInfo.setVisibility(View.GONE);
-                            TextView error = getParentFragment().getActivity().findViewById(R.id.user_fragment_error);
+                            TextView error = getActivity().findViewById(R.id.user_fragment_error);
                             error.setVisibility(View.VISIBLE);
                         }
                     });
@@ -82,9 +86,64 @@ public class UserInfoFragment extends Fragment {
             regdate.setText(getUser().getCreationDate());
         }
 
+        Dialog deleteDialog = new Dialog(requireContext());
+        deleteDialog.setContentView(R.layout.dialog_user_delete);
+        deleteDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        deleteDialog.getWindow().setBackgroundDrawable(getActivity().getDrawable(R.drawable.rounded_border));
+        deleteDialog.setCancelable(false);
+
+        Button dialogConfirm = deleteDialog.findViewById(R.id.user_delete_dialog_confirm);
+        Button dialogCancel = deleteDialog.findViewById(R.id.user_delete_dialog_cancel);
+
         if(loggedUserId == userId){
             deleteButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteDialog.show();
+                }
+            });
+
+            dialogCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteDialog.dismiss();
+                }
+            });
+
+            dialogConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String credentials = sharedPref.getString("auth", "");
+                    userOkHttpHelper.deleteUser(getUserId(), credentials, new UserOkHttpHelper.CallbackResponseString() {
+                        @Override
+                        public void onSuccess(String response) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getContext(), R.string.success, Toast.LENGTH_LONG);
+                                    toast.show();
+                                    Intent intent = new Intent(getContext(), RegistrationPage.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast toast = Toast.makeText(getContext(), R.string.server_error, Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        }
+                    });
+                }
+            });
 
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override

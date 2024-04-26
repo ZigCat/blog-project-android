@@ -34,9 +34,9 @@ public class RegistrationPage extends AppCompatActivity {
                 EditText nickname = findViewById(R.id.reg_nickname);
                 EditText email = findViewById(R.id.reg_email);
                 EditText password = findViewById(R.id.reg_password);
-                UserRequest user = new UserRequest(username.getText().toString(),
-                        nickname.getText().toString(),
-                        email.getText().toString(),
+                UserRequest user = new UserRequest(username.getText().toString().trim(),
+                        nickname.getText().toString().trim(),
+                        email.getText().toString().trim(),
                         password.getText().toString(),
                         "USER");
                 String credentials = Credentials.basic(username.getText().toString(), password.getText().toString());

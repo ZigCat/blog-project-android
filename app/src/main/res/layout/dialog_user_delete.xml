@@ -4,7 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="30dp">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,24 +11,24 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/post_delete_dialog_title"
+            android:id="@+id/user_delete_dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             android:textColor="@color/main_color"
             android:fontFamily="@font/istokweb_bold"
-            android:text="@string/post_delete_dialog_title"
+            android:text="@string/delete_account_title"
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/post_delete_dialog_message"
+            android:id="@+id/user_delete_dialog_message"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:textColor="@color/main_color"
-            android:text="@string/post_delete_dialog_message"
+            android:text="@string/delete_account_message"
             android:textSize="25sp" />
 
         <LinearLayout
@@ -38,7 +37,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/post_delete_dialog_cancel"
+                android:id="@+id/user_delete_dialog_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -50,13 +49,13 @@
                 android:textColor="@color/white"/>
 
             <Button
-                android:id="@+id/post_delete_dialog_confirm"
+                android:id="@+id/user_delete_dialog_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/red"
                 android:text="@string/confirm"
                 android:textSize="20sp"
                 android:textColor="@color/white"/>
