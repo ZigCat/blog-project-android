@@ -2,9 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background">#4D000000</color>
-    <color name="semiblack">#4A000000</color>
-    <color name="semiblack_bg">#1A000000</color>
+    <color name="semicolor">#FF494646</color>
+    <color name="lighter">#FFDFDADA</color>
+    <color name="semicolor_bg">#FFA7A6A6</color>
     <color name="blue">#FF00BFFF</color>
     <color name="red">#FFFF4040</color>
 </resources>

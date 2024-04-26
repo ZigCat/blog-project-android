@@ -6,7 +6,6 @@
     android:layout_height="300dp"
     android:orientation="vertical"
     android:padding="15dp"
-    android:background="@color/white"
     tools:context=".fragments.userpage.UserInfoFragment">
 
     <LinearLayout
@@ -22,16 +21,17 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/istokweb_bold"
             android:maxWidth="300dp"
-            android:textColor="@color/black"
+            android:textColor="@color/main_color"
             android:textSize="35sp" />
 
         <ImageView
             android:id="@+id/user_editbutton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:src="@drawable/edit"
+            app:tint="@color/main_color"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -55,7 +55,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:src="@drawable/calendar"
-            app:tint="@color/semiblack" />
+            app:tint="@color/semicolor" />
 
         <TextView
             android:id="@+id/user_regdate"
@@ -63,8 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:fontFamily="@font/istokweb_regular"
-            android:textColor="@color/semiblack"
+            android:textColor="@color/semicolor"
             android:textSize="25sp" />
     </LinearLayout>
 
@@ -77,5 +76,6 @@
         android:backgroundTint="@color/red"
         android:text="@string/delete_account"
         android:textSize="30sp"
+        android:textColor="@color/white"
         android:visibility="gone" />
 </LinearLayout>

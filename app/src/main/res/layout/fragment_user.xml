@@ -9,13 +9,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/bg_color">
 
         <LinearLayout
             android:id="@+id/user_banner"
             android:layout_width="match_parent"
             android:layout_height="152dp"
-            android:background="@color/semiblack"
+            android:background="@color/semicolor_bg"
             android:orientation="vertical" />
 
         <ImageView
@@ -31,7 +32,8 @@
         <FrameLayout
             android:id="@+id/user_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="300dp" />
+            android:layout_height="300dp"
+            android:background="@color/bg_color"/>
 
         <TextView
             android:id="@+id/user_posts_title"
@@ -41,7 +43,7 @@
             android:fontFamily="@font/istokweb_bold"
             android:gravity="center"
             android:text="@string/user_posts_title"
-            android:textColor="@color/black"
+            android:textColor="@color/main_color"
             android:textSize="30sp"
             tools:ignore="TextSizeCheck" />
 
@@ -60,7 +62,8 @@
             android:fontFamily="@font/istokweb_bold"
             android:gravity="center"
             android:textSize="30sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textColor="@color/main_color"/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

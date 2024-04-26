@@ -6,7 +6,6 @@
     android:layout_height="300dp"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@color/white"
     tools:context=".fragments.userpage.UserUpdatePwdFragment">
 
     <LinearLayout
@@ -23,7 +22,7 @@
             android:fontFamily="@font/istokweb_bold"
             android:gravity="center"
             android:text="@string/user_editpwd_title"
-            android:textColor="@color/black"
+            android:textColor="@color/main_color"
             android:textSize="30sp" />
 
         <Button
@@ -52,7 +51,7 @@
         android:inputType="textPassword"
         android:padding="12dp"
         android:textColor="@color/black"
-        android:textColorHint="@color/semiblack" />
+        android:textColorHint="@color/semicolor_bg" />
 
     <EditText
         android:id="@+id/user_editpwd2"
@@ -66,7 +65,7 @@
         android:inputType="textPassword"
         android:padding="12dp"
         android:textColor="@color/black"
-        android:textColorHint="@color/semiblack" />
+        android:textColorHint="@color/semicolor_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,7 +82,7 @@
             android:fontFamily="@font/istokweb_bold"
             android:text="@string/editinfo_cancel"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/editpwd_apply"
@@ -94,7 +93,7 @@
             android:fontFamily="@font/istokweb_bold"
             android:text="@string/editinfo_apply"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

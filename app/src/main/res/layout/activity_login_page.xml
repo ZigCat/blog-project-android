@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4D000000"
+    android:background="@color/auth_color"
     tools:context=".LoginPage">
 
     <LinearLayout
@@ -26,10 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/istokweb_regular"
+            android:fontFamily="@font/istokweb_bold"
             android:text="@string/login_title"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/main_color"
             android:textSize="40sp" />
 
         <TextView
@@ -38,9 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
-            android:fontFamily="@font/istokweb_regular"
             android:text="@string/username_pole"
-            android:textColor="@color/black"
+            android:textColor="@color/main_color"
             android:textSize="20sp" />
 
         <EditText
@@ -52,12 +51,11 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/input_pole"
             android:ems="10"
-            android:fontFamily="@font/istokweb_regular"
             android:hint="@string/username_hint"
             android:inputType="text"
             android:padding="15dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/background"
+            android:textColorHint="@color/semicolor_bg"
             android:autofillHints="" />
 
         <TextView
@@ -66,9 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/istokweb_regular"
             android:text="@string/username_pole"
-            android:textColor="@color/black"
+            android:textColor="@color/main_color"
             android:textSize="20sp" />
 
         <EditText
@@ -80,12 +77,11 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/input_pole"
             android:ems="10"
-            android:fontFamily="@font/istokweb_regular"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:padding="15dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/background"
+            android:textColorHint="@color/semicolor_bg"
             android:autofillHints="" />
 
         <Button
@@ -97,7 +93,7 @@
             android:layout_marginEnd="65dp"
             android:backgroundTint="@color/blue"
             android:fontFamily="@font/istokweb_bold"
-            android:onClick="loginRequest"
+            android:textColor="@color/white"
             android:text="@string/login_title"
             android:textSize="25sp" />
 
@@ -111,6 +107,7 @@
             android:backgroundTint="@color/blue"
             android:fontFamily="@font/istokweb_bold"
             android:onClick="goToRegPage"
+            android:textColor="@color/white"
             android:text="@string/registration_title"
             android:textSize="25sp" />
     </LinearLayout>
